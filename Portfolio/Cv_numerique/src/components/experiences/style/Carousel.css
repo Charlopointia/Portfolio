@@ -1,0 +1,58 @@
+.marquee {
+  overflow: hidden;
+  /* hide the scrolling overflow */
+  width: 100%;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.marquee__inner {
+  display: flex;
+  width: max-content;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee__group {
+  display: flex;
+  height: 170px;
+  width: auto;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.marquee__group span {
+  margin: 0 1.5rem;
+  white-space: nowrap;
+  background: #000000;
+  color: white;
+  padding: 4px 16px 4px 12px;
+  border-radius: 6px;
+  font-size: 1.2rem;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

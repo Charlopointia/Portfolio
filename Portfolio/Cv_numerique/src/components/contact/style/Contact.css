@@ -1,0 +1,208 @@
+.contact-section {
+  max-width: 780px;
+  margin: 0 auto 0 auto;
+  display: grid;
+  gap: 12px;
+}
+
+.contact-header h2 {
+  margin: 0;
+  text-align: center;
+  font-size: 42px;
+}
+
+.contact-subtitle {
+  margin: 32px 0 0 0;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 20px;
+  text-align: center;
+}
+
+.contact-card {
+  width: 100%;
+  margin: 32px 0 0 0;
+  box-sizing: border-box;
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 18px;
+  text-align: center;
+}
+
+.contact-intro {
+  max-width: 58ch;
+  margin: 0 auto;
+  color: rgba(226, 236, 255, 0.78);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.contact-email-line {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 18px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.contact-copy-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(80, 120, 255, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.contact-copy-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(80, 120, 255, 0.2);
+}
+
+.contact-copy-btn.is-copied {
+  color: rgba(255, 255, 255, 0.98);
+  border-color: rgba(104, 243, 184, 0.7);
+  background: rgba(52, 211, 153, 0.28);
+  animation: contact-copy-ready 0.55s ease;
+  box-shadow: 0 0 0 8px rgba(52, 211, 153, 0.08);
+}
+
+.contact-copy-icon {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.contact-copy-btn.is-copied .contact-copy-icon {
+  animation: contact-copy-icon-ready 0.35s ease;
+}
+
+@keyframes contact-copy-ready {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.24);
+  }
+
+  55% {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 10px rgba(52, 211, 153, 0.12);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(52, 211, 153, 0.08);
+  }
+}
+
+@keyframes contact-copy-icon-ready {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 118px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.contact-btn:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.contact-btn--ghost {
+  background: rgba(80, 120, 255, 0.12);
+}
+
+.contact-btn--primary {
+  background: linear-gradient(
+    135deg,
+    rgba(80, 120, 255, 0.32),
+    rgba(52, 211, 153, 0.16)
+  );
+  border-color: rgba(120, 180, 255, 0.36);
+}
+
+.contact-footer {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 22px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: rgba(226, 236, 255, 0.72);
+  font-size: 13px;
+}
+
+.contact-footer p {
+  margin: 0;
+}
+
+.contact-footer a {
+  flex: 0 0 auto;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.contact-footer a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(104, 243, 184, 0.12);
+}
+
+@media (max-width: 640px) {
+  .contact-footer {
+    flex-direction: column;
+    text-align: center;
+  }
+}
