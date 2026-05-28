@@ -1,6 +1,8 @@
 import CodeBackground from "../Animation/CodeBackground";
 
 export default function Accueil() {
+  const cvUrl = `${import.meta.env.BASE_URL}cv-charly-brachet.pdf`;
+
   return (
     <div className="hero">
       <CodeBackground />
@@ -19,7 +21,7 @@ export default function Accueil() {
             <a href="#contact" className="menuCard contact">Contact</a>
 
             <a
-              href="/cv-charly-brachet.pdf"
+              href={cvUrl}
               download
               className="menuCard menuCard--secondary"
             >
