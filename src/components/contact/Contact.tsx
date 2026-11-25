@@ -14,7 +14,13 @@ export default function Contact() {
   const email = "charly.brachet@epitech.com";
 
   const copyEmail = async () => {
-    await navigator.clipboard.writeText(email);
+    try {
+      await navigator.clipboard.writeText(email);
+    } catch {
+      // Presse-papier indisponible (contexte non sécurisé, permission refusée…)
+      window.prompt("Copiez l'adresse email :", email);
+      return;
+    }
     setIsEmailCopied(true);
     if (copiedTimeoutRef.current) {
       clearTimeout(copiedTimeoutRef.current);
@@ -33,7 +39,7 @@ export default function Contact() {
   }, []);
 
   return (
-    <section className="contact-section">
+    <div className="contact-section">
       <header className="contact-header">
         <h2>Construisons votre prochain projet</h2>
       </header>
@@ -91,6 +97,6 @@ export default function Contact() {
         <p>© 2026 Charly Brachet · Bordeaux · Fullstack / Cyber / Data-IA</p>
         <a href="#accueil">Retour en haut</a>
       </footer>
-    </section>
+    </div>
   );
 }

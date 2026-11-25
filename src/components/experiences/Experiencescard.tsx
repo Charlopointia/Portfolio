@@ -61,21 +61,24 @@ export default function Experiencescard() {
   };
 
   return (
-    <button
+    <div
       className="experiences-card"
-      type="button"
+      role="region"
+      aria-roledescription="carrousel"
+      aria-label="Projets"
       onClick={showNextProject}
-      aria-label="Afficher le projet suivant"
     >
-      <div className="experiences-card__viewport">
+      <div className="experiences-card__viewport" aria-live="polite">
         <div
           className="experiences-card__track"
           style={{ transform: `translateX(-${activeProject * 100}%)` }}
         >
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <article
               className="experiences-card__project"
               key={project.title}
+              aria-hidden={index !== activeProject}
+              aria-label={`Projet ${index + 1} sur ${projects.length}`}
               style={
                 {
                   "--project-background": `url(${project.image})`,
@@ -99,7 +102,31 @@ export default function Experiencescard() {
           ))}
         </div>
       </div>
-      <span className="experiences-card__next-indicator" aria-hidden="true" />
-    </button>
+      <button
+        className="experiences-card__next-indicator"
+        type="button"
+        onClick={(event) => {
+          event.stopPropagation();
+          showNextProject();
+        }}
+        aria-label="Projet suivant"
+      />
+
+      <div className="experiences-card__dots">
+        {projects.map((project, index) => (
+          <button
+            key={project.title}
+            type="button"
+            className={`experiences-card__dot${index === activeProject ? " is-active" : ""}`}
+            onClick={(event) => {
+              event.stopPropagation();
+              setActiveProject(index);
+            }}
+            aria-label={`Afficher le projet : ${project.title}`}
+            aria-current={index === activeProject}
+          />
+        ))}
+      </div>
+    </div>
   );
 }

@@ -1,9 +1,11 @@
+```
 ██████╗  ██████╗ ██████╗ ████████╗███████╗ ██████╗ ██╗     ██╗ ██████╗ 
 ██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██║     ██║██╔═══██╗
 ██████╔╝██║   ██║██████╔╝   ██║   █████╗  ██║   ██║██║     ██║██║   ██║
 ██╔═══╝ ██║   ██║██╔══██╗   ██║   ██╔══╝  ██║   ██║██║     ██║██║   ██║
 ██║     ╚██████╔╝██║  ██║   ██║   ██║     ╚██████╔╝███████╗██║╚██████╔╝
 ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝      ╚═════╝ ╚══════╝╚═╝ ╚═════╝
+```
 
 Full Stack • Cybersecurity • Data • AI
 
@@ -56,18 +58,49 @@ développer des systèmes modernes, performants et sécurisés, tout en gardant 
 
 - Expérience immersive orientée branding personnel
 
-## Structure
+Code source du portfolio (React 19 + TypeScript + Vite 7), déployé sur GitHub Pages.
+
+## Lancer en local
 
 ```bash
+npm install
+npm run dev
+```
 
+Puis ouvrir http://localhost:5173/Portfolio/ (le chemin `/Portfolio/` vient de `base` dans `vite.config.ts`).
+
+## Scripts
+
+| Commande          | Rôle                                         |
+| ----------------- | -------------------------------------------- |
+| `npm run dev`     | Serveur de développement avec rechargement   |
+| `npm run build`   | Vérification TypeScript + build dans `dist/` |
+| `npm run preview` | Sert le build de production en local         |
+| `npm run lint`    | ESLint                                       |
+
+## Structure
+
+```
 src/
+├── App.tsx                  # Assemble les 4 sections (#accueil, #about, #experience, #contact)
+├── index.css                # Styles globaux et mise en page des sections
+└── components/
+    ├── accueil/             # Hero + boutons de navigation + téléchargement du CV
+    ├── Animation/           # Fond animé « code qui s'écrit »
+    ├── about/               # Sélecteur Cyber / Full stack / Data-IA
+    ├── experiences/         # Carte projets + bandeau défilant
+    └── contact/             # Email, réseaux, footer
+public/
+└── cv-charly-brachet.pdf    # CV téléchargeable
+```
 
- ├── components/
+## Modifier le contenu
 
- ├── pages/
+- **Projets** : tableau `projects` dans `components/experiences/Experiencescard.tsx`
+- **Compétences** : tableau `aboutToggleItems` dans `components/about/About_card.tsx`
+- **Liens et email** : `socialLinks` et `email` dans `components/contact/Contact.tsx`
+- **CV** : remplacer `public/cv-charly-brachet.pdf` (garder le même nom)
 
- ├── assets/
+## Déploiement
 
- ├── styles/
-
- └── animations/
+Chaque push sur `main` déclenche `.github/workflows/deploy.yml`, qui compile le projet et publie `dist/` sur GitHub Pages.

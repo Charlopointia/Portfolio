@@ -4,7 +4,7 @@ import Experiencescard from "./Experiencescard";
 
 export default function Experience() {
   return (
-    <section id="experience">
+    <div className="experience">
       <h2 className="experience-title">
         Une expérience bâtie au cours de nombreux projets
       </h2>
@@ -20,6 +20,6 @@ export default function Experience() {
       <div className="experience-carousel">
         <Carousel />
       </div>
-    </section>
+    </div>
   );
 }
