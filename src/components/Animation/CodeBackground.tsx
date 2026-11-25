@@ -3,7 +3,7 @@ import { verses } from "./verses";
 import "./CodeBackground.css";
 
 type CodeBackgroundProps = {
-  /** Élément au centre du globe (la card avec le nom) */
+  /** Élément sur lequel la grille est centrée (la card avec le nom) */
   anchorRef: RefObject<HTMLElement | null>;
 };
 
@@ -12,10 +12,9 @@ type CodeBackgroundProps = {
 /* -------------------------------------------------------------------------- */
 
 const SETTINGS = {
-  fontSize: 13, // taille de base des lettres (px CSS)
+  fontSize: 13, // taille des lettres (px CSS)
   lineHeight: 22, // hauteur d'une ligne de la grille (px CSS)
-  centerZoom: 1.2, // grossissement au centre du globe
-  rotationSpeed: 7, // rotation du globe (px de grille par seconde)
+  scrollSpeed: 7, // défilement horizontal (px par seconde)
   maxPixelRatio: 1.5, // limite la résolution sur les écrans Retina (performances)
 };
 
@@ -46,8 +45,7 @@ void main() {
 
 /*
  * Pour chaque pixel :
- *  1. globe : on projette le pixel sur une sphère centrée sur la card
- *     (texte grossi au centre, comprimé vers le bord) ;
+ *  1. on le place sur la grille de texte, qui défile lentement ;
  *  2. on trouve la case de la grille et la lettre qu'elle contient ;
  *  3. un bruit animé décide si la lettre est allumée : des groupes de lettres
  *     voisines s'allument ensemble (des mots apparaissent), d'autres scintillent.
@@ -59,10 +57,8 @@ uniform sampler2D uAtlas;
 uniform sampler2D uMap;
 uniform vec2 uResolution;
 uniform vec2 uCenter;
-uniform vec2 uGlobe;     // rayons horizontal et vertical du globe
 uniform vec2 uCell;      // taille d'une case de la grille
 uniform float uGlyphHeight;
-uniform float uZoom;
 uniform float uTime;
 uniform float uSpeed;
 
@@ -91,16 +87,9 @@ void main() {
   vec2 p = vec2(gl_FragCoord.x, uResolution.y - gl_FragCoord.y);
   vec2 v = p - uCenter;
 
-  // 1. Globe : distance au centre, normalisée sur l'ellipse
-  vec2 n = v / uGlobe;
-  float rn = length(n);
-  if (rn >= 1.0) {
-    gl_FragColor = vec4(0.0);
-    return;
-  }
-  float projection = rn > 0.0001 ? asin(rn) / rn : 1.0;
-  vec2 grid = v * projection / uZoom;
-  grid.x += uTime * uSpeed; // le globe tourne
+  // 1. Grille à plat, alignée sur le centre de la card, qui défile lentement
+  vec2 grid = v;
+  grid.x += uTime * uSpeed;
 
   // 2. Case de la grille et lettre correspondante
   vec2 cellPos = grid / uCell;
@@ -127,19 +116,10 @@ void main() {
   float flicker = 0.5 + 0.5 * sin(uTime * (0.6 + 1.4 * hash(cell)) + hash(cell + 3.1) * 6.2831);
   float lit = smoothstep(0.6, 0.68, words * 0.5 + flicker * 0.55);
 
-  // Ombrage de sphère : plus sombre vers le bord
-  float shade = sqrt(1.0 - rn * rn);
-  float letter = ink * lit * mix(0.25, 0.9, shade);
+  float letter = ink * lit * 0.75;
+  vec3 letterColor = mix(vec3(0.553, 0.741, 1.0), vec3(0.84, 0.91, 1.0), lit * 0.5);
 
-  // Léger voile bleuté qui dessine la sphère
-  float fill = 0.07 * shade + 0.05 * smoothstep(0.93, 1.0, rn) * (1.0 - smoothstep(0.995, 1.0, rn));
-
-  vec3 letterColor = mix(vec3(0.553, 0.741, 1.0), vec3(0.84, 0.91, 1.0), lit * shade * 0.5);
-  vec3 fillColor = vec3(0.25, 0.42, 0.85);
-  float alpha = letter + fill * (1.0 - letter);
-  vec3 color = (letterColor * letter + fillColor * fill * (1.0 - letter));
-
-  gl_FragColor = vec4(color, alpha);
+  gl_FragColor = vec4(letterColor * letter, letter);
 }
 `;
 
@@ -290,14 +270,12 @@ export default function CodeBackground({ anchorRef }: CodeBackgroundProps) {
 
     const uResolution = uniform("uResolution");
     const uCenter = uniform("uCenter");
-    const uGlobe = uniform("uGlobe");
     const uCell = uniform("uCell");
     const uGlyphHeight = uniform("uGlyphHeight");
-    const uZoom = uniform("uZoom");
     const uTime = uniform("uTime");
     const uSpeed = uniform("uSpeed");
 
-    /** Recalcule la taille, le centre (milieu de la card) et le globe */
+    /** Recalcule la taille et le centre (la grille est alignée sur la card) */
     const layout = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, SETTINGS.maxPixelRatio);
       const width = Math.max(1, Math.round(container.clientWidth * ratio));
@@ -311,20 +289,14 @@ export default function CodeBackground({ anchorRef }: CodeBackgroundProps) {
       const cx = (anchorBox ? anchorBox.left + anchorBox.width / 2 - containerBox.left : containerBox.width / 2) * ratio;
       const cy = (anchorBox ? anchorBox.top + anchorBox.height / 2 - containerBox.top : containerBox.height / 2) * ratio;
 
-      // Globe un peu plus grand que l'écran : son bord arrondi apparaît dans les coins
-      const radiusX = Math.max(cx, width - cx) * 1.18;
-      const radiusY = Math.max(cy, height - cy) * 1.4;
-
       const glyphWidth = SETTINGS.fontSize * 0.6 * ratio;
       const glyphHeight = glyphWidth * (ATLAS.cellHeight / ATLAS.glyphWidth);
 
       gl.uniform2f(uResolution, width, height);
       gl.uniform2f(uCenter, cx, cy);
-      gl.uniform2f(uGlobe, radiusX, radiusY);
       gl.uniform2f(uCell, glyphWidth, SETTINGS.lineHeight * ratio);
       gl.uniform1f(uGlyphHeight, glyphHeight);
-      gl.uniform1f(uZoom, SETTINGS.centerZoom);
-      gl.uniform1f(uSpeed, SETTINGS.rotationSpeed * ratio);
+      gl.uniform1f(uSpeed, SETTINGS.scrollSpeed * ratio);
     };
 
     const start = performance.now();
