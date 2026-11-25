@@ -23,9 +23,7 @@
   margin: 32px 0 0 0;
   box-sizing: border-box;
   padding: 24px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--card-radius-sm);
   display: grid;
   gap: 18px;
   text-align: center;
@@ -161,48 +159,4 @@
     rgba(52, 211, 153, 0.16)
   );
   border-color: rgba(120, 180, 255, 0.36);
-}
-
-.contact-footer {
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 22px;
-  padding: 16px 20px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  color: rgba(226, 236, 255, 0.72);
-  font-size: 13px;
-}
-
-.contact-footer p {
-  margin: 0;
-}
-
-.contact-footer a {
-  flex: 0 0 auto;
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.05);
-  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-}
-
-.contact-footer a:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.34);
-  background: rgba(104, 243, 184, 0.12);
-}
-
-@media (max-width: 640px) {
-  .contact-footer {
-    flex-direction: column;
-    text-align: center;
-  }
 }

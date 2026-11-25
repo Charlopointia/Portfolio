@@ -38,7 +38,8 @@ main {
 
 #contact.section {
   min-height: auto;
-  padding: 42px 24px 52px;
+  /* L'espace du bas est porté par le footer partagé (components/layout/Footer.css) */
+  padding: 42px 24px 0;
 }
 
 main {
@@ -54,6 +55,20 @@ main {
   --text: rgba(255, 255, 255, 0.92);
   --muted: rgba(255, 255, 255, 0.65);
   --line: rgba(255, 255, 255, 0.12);
+
+  /* Cartes (voir components/ui/Card) */
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-hover: rgba(255, 255, 255, 0.35);
+  --card-radius: 24px;
+  --card-radius-sm: 16px;
+  --card-lift: -5px;
+  --card-hover-bg: linear-gradient(
+    135deg,
+    rgba(60, 200, 140, 0.3),
+    rgba(40, 160, 110, 0.18)
+  );
+  --card-transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
 body {
@@ -270,7 +285,7 @@ body {
   color: rgba(255, 255, 255, 0.75);
 }
 
-@media (max-width: 430px) {
+@media (--mobile) {
   .nav {
     gap: 10px;
     padding: 12px 16px;
@@ -309,7 +324,7 @@ body {
   }
 }
 
-@media (min-width: 600px) and (max-width: 1024px) {
+@media (--tablet) {
   .section {
     padding: 56px 24px;
   }

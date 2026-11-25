@@ -1,0 +1,19 @@
+/*
+ * Style de base des cartes.
+ * :where() donne une spécificité nulle : n'importe quelle classe
+ * propre à un composant (.contact-card, .about-card…) peut le surcharger.
+ */
+:where(.card) {
+  box-sizing: border-box;
+  border-radius: var(--card-radius);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  transition: var(--card-transition);
+}
+
+/* Effet au survol : la carte se soulève et passe au dégradé vert */
+:where(.card--hoverable):hover {
+  transform: translateY(var(--card-lift));
+  border-color: var(--card-border-hover);
+  background: var(--card-hover-bg);
+}

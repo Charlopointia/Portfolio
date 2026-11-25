@@ -5,24 +5,15 @@
   margin: 0 auto;
   padding: 0;
   overflow: hidden;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
   color: inherit;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   cursor: pointer;
+  /* Fond, bordure, coins et survol : composant Card (hoverable) */
   transform: translateY(0);
-  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
 .experiences-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.35);
-  background: linear-gradient(
-    135deg,
-    rgba(60, 200, 140, 0.3),
-    rgba(40, 160, 110, 0.18)
-  );
+  transform: translateY(var(--card-lift));
 }
 
 .experiences-card__next-indicator {
@@ -179,7 +170,7 @@
   font-weight: 600;
 }
 
-@media (max-width: 430px) {
+@media (--mobile) {
   .experiences-card {
     border-radius: 20px;
   }

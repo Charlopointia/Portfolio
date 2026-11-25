@@ -1,5 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
+import Card from "../ui/Card";
 import "./style/Contact.css";
 
 const socialLinks = [
@@ -44,7 +45,7 @@ export default function Contact() {
         <h2>Construisons votre prochain projet</h2>
       </header>
 
-      <div className="contact-card">
+      <Card className="contact-card">
         <p className="contact-intro">
           Envoyez-moi un message avec votre besoin, votre contexte et vos délais.
         </p>
@@ -91,12 +92,7 @@ export default function Contact() {
             </a>
           ))}
         </div>
-      </div>
-
-      <footer className="contact-footer">
-        <p>© 2026 Charly Brachet · Bordeaux · Fullstack / Cyber / Data-IA</p>
-        <a href="#accueil">Retour en haut</a>
-      </footer>
+      </Card>
     </div>
   );
 }

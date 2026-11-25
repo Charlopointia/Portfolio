@@ -1,0 +1,20 @@
+/*
+ * Breakpoints du site — source unique.
+ *
+ * Utilisation dans n'importe quel fichier CSS :
+ *   @media (--mobile) { ... }
+ *
+ * Ces alias sont remplacés par les vraies valeurs au build
+ * (postcss-custom-media, voir postcss.config.js). Les variables CSS
+ * classiques (var(--x)) ne fonctionnent pas dans les @media.
+ */
+
+/* Téléphones */
+@custom-media --mobile (max-width: 430px);
+
+/* Tablettes et petits laptops */
+@custom-media --tablet (min-width: 600px) and (max-width: 1024px);
+
+/* Seuils de mise en page propres à certaines sections */
+@custom-media --below-640 (max-width: 640px); /* footer empilé */
+@custom-media --below-860 (max-width: 860px); /* grille About sur 1 colonne */

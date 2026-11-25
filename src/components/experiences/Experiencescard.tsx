@@ -1,4 +1,5 @@
 import { type CSSProperties, useState } from "react";
+import Card from "../ui/Card";
 import "./style/Experiencescard.css";
 
 import apiImage from "../../assets/projet/asset6.webp";
@@ -61,7 +62,8 @@ export default function Experiencescard() {
   };
 
   return (
-    <div
+    <Card
+      hoverable
       className="experiences-card"
       role="region"
       aria-roledescription="carrousel"
@@ -127,6 +129,6 @@ export default function Experiencescard() {
           />
         ))}
       </div>
-    </div>
+    </Card>
   );
 }

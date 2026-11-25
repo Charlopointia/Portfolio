@@ -1,0 +1,51 @@
+/*
+ * Footer partagé par toutes les pages.
+ * L'espacement reproduit l'ancien placement dans la section Contact :
+ * 34px au-dessus (22px de marge + 12px d'écart de grille), 24px sur les côtés,
+ * 52px en dessous.
+ */
+.site-footer-wrap {
+  padding: 34px 24px 52px;
+}
+
+.site-footer {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  border-radius: var(--card-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: rgba(226, 236, 255, 0.72);
+  font-size: 13px;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer a {
+  flex: 0 0 auto;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.site-footer a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(104, 243, 184, 0.12);
+}
+
+@media (--below-640) {
+  .site-footer {
+    flex-direction: column;
+    text-align: center;
+  }
+}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Card from "../ui/Card";
 import cyber from "../../assets/about/cyber.webp";
 import data from "../../assets/about/data.webp";
 import fullstack from "../../assets/about/fullstack.webp";
@@ -66,7 +67,7 @@ export function AboutProfileCard({ activeToggle }: AboutProfileCardProps) {
   const activeItem = aboutToggleItems[activeIndex];
 
   return (
-    <div className="about-card about-card--profile">
+    <Card className="about-card about-card--profile">
       <div className="about-profile-frame">
         <div
           className="about-slide-track"
@@ -89,7 +90,7 @@ export function AboutProfileCard({ activeToggle }: AboutProfileCardProps) {
       </div>
 
       <p className="about-profile-caption">{activeItem.label}</p>
-    </div>
+    </Card>
   );
 }
 
@@ -97,7 +98,7 @@ export function AboutSkillsCard({ activeToggle }: AboutSkillsCardProps) {
   const activeIndex = getActiveToggleIndex(activeToggle);
 
   return (
-    <div className="about-card about-card--skills">
+    <Card className="about-card about-card--skills">
       <div className="about-skills-viewport">
         <div
           className="about-slide-track"
@@ -119,13 +120,13 @@ export function AboutSkillsCard({ activeToggle }: AboutSkillsCardProps) {
           ))}
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
 
 export function AboutDescriptionCard() {
   return (
-    <div className="about-card about-card--description">
+    <Card className="about-card about-card--description">
       <p className="aboutText">
         Développeur autodidacte, j’ai choisi de
         rejoindre le campus d'Epitech Bordeaux afin de structurer et
@@ -140,7 +141,7 @@ export function AboutDescriptionCard() {
         Mon parcours hybride me permet d’allier curiosité, autonomie et
         rigueur technique dans chacun de mes projets.
       </p>
-    </div>
+    </Card>
   );
 }
 
@@ -149,7 +150,7 @@ export function AboutToggleCard({
   setActiveToggle,
 }: AboutToggleCardProps) {
   return (
-    <div className="about-card about-card--toggle">
+    <Card className="about-card about-card--toggle">
       <div
         className="about-toggle-list"
         role="radiogroup"
@@ -173,7 +174,7 @@ export function AboutToggleCard({
           </button>
         ))}
       </div>
-    </div>
+    </Card>
   );
 }
 

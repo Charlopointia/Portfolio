@@ -82,23 +82,59 @@ Puis ouvrir http://localhost:5173/Portfolio/ (le chemin `/Portfolio/` vient de `
 
 ```
 src/
-├── App.tsx                  # Assemble les 4 sections (#accueil, #about, #experience, #contact)
-├── index.css                # Styles globaux et mise en page des sections
+├── main.tsx                 # Point d'entrée + BrowserRouter
+├── App.tsx                  # Liste des routes (pages)
+├── index.css                # Styles globaux + tokens (:root)
+├── styles/
+│   └── breakpoints.css      # Breakpoints nommés (--mobile, --tablet…)
+├── pages/
+│   └── Home.tsx             # Page d'accueil : les 4 sections
 └── components/
+    ├── layout/              # Layout commun (main + footer) partagé par toutes les pages
+    ├── ui/Card.tsx          # Carte réutilisable
     ├── accueil/             # Hero + boutons de navigation + téléchargement du CV
     ├── Animation/           # Fond animé « code qui s'écrit »
     ├── about/               # Sélecteur Cyber / Full stack / Data-IA
     ├── experiences/         # Carte projets + bandeau défilant
-    └── contact/             # Email, réseaux, footer
+    └── contact/             # Email, réseaux
 public/
 └── cv-charly-brachet.pdf    # CV téléchargeable
 ```
+
+## Ajouter une page
+
+1. Créer `src/pages/MaPage.tsx`
+2. Déclarer la route dans `src/App.tsx` : `<Route path="ma-page" element={<MaPage />} />`
+3. Faire un lien avec `<Link to="/ma-page">` (import depuis `react-router`)
+
+La page hérite automatiquement du layout (footer compris). Elle sera accessible sur `/Portfolio/ma-page`, même en rechargeant : le build copie `index.html` en `404.html` pour GitHub Pages.
+
+## Breakpoints
+
+Définis une seule fois dans `src/styles/breakpoints.css` et utilisables dans tous les fichiers CSS :
+
+```css
+@media (--mobile) { … }   /* ≤ 430px */
+@media (--tablet) { … }   /* 600px – 1024px */
+```
+
+## Cartes
+
+```tsx
+import Card from "../ui/Card";
+
+<Card className="ma-carte">…</Card>              // fond, bordure, coins arrondis
+<Card hoverable as="article">…</Card>            // + effet au survol
+```
+
+Le style commun utilise les variables `--card-*` de `index.css`. Une classe ajoutée (`ma-carte`) peut tout surcharger.
 
 ## Modifier le contenu
 
 - **Projets** : tableau `projects` dans `components/experiences/Experiencescard.tsx`
 - **Compétences** : tableau `aboutToggleItems` dans `components/about/About_card.tsx`
 - **Liens et email** : `socialLinks` et `email` dans `components/contact/Contact.tsx`
+- **Footer** : `components/layout/Footer.tsx`
 - **CV** : remplacer `public/cv-charly-brachet.pdf` (garder le même nom)
 
 ## Déploiement
