@@ -98,12 +98,14 @@
   position: relative;
   display: grid;
   align-content: center;
-  justify-items: start;
+  justify-items: center;
   min-height: 560px;
-  padding: 84px 64px;
-  text-align: left;
+  /* 76px sur les côtés : symétrique, et laisse la place à la flèche à droite */
+  padding: 84px 76px;
+  text-align: center;
+  /* Contenu centré : voile sombre uniforme pour la lisibilité */
   background:
-    linear-gradient(90deg, rgba(7, 16, 34, 0.9), rgba(7, 16, 34, 0.62) 50%, rgba(7, 16, 34, 0.28)),
+    linear-gradient(rgba(7, 16, 34, 0.78), rgba(7, 16, 34, 0.78)),
     var(--project-background);
   background-position: center center;
   background-size: cover;
@@ -112,6 +114,7 @@
 
 .experiences-card__content {
   display: grid;
+  justify-items: center;
   gap: 14px;
   max-width: 620px;
 }
@@ -154,6 +157,7 @@
 .experiences-card__tools ul {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 8px;
   margin: 0;
   padding: 0;
@@ -177,9 +181,9 @@
 
   .experiences-card__project {
     min-height: 420px;
-    padding: 40px 72px 40px 24px;
+    padding: 40px 64px;
     background:
-      linear-gradient(90deg, rgba(7, 16, 34, 0.92), rgba(7, 16, 34, 0.7)),
+      linear-gradient(rgba(7, 16, 34, 0.82), rgba(7, 16, 34, 0.82)),
       var(--project-background);
     background-position: center center;
     background-size: cover;

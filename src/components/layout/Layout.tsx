@@ -18,6 +18,13 @@ export default function Layout() {
     if (!window.location.hash) window.scrollTo(0, 0);
   }, [pathname]);
 
+  // Lien direct vers une section (ex. …/Portfolio/#contact) : au chargement,
+  // le navigateur cherche l'ancre avant que React ait affiché la page → on y va ici.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (id) document.getElementById(id)?.scrollIntoView();
+  }, []);
+
   return (
     <>
       <main>

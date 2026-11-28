@@ -24,15 +24,25 @@
   justify-content: flex-start;
 }
 
+/*
+ * --marquee-height : hauteur des logos.
+ * La durée est proportionnelle à la hauteur (20s pour 170px, 27s pour 230px) :
+ * la vitesse de défilement reste la même.
+ */
+.marquee {
+  --marquee-height: 230px;
+  --marquee-duration: 27s;
+}
+
 .marquee__inner {
   display: flex;
   width: max-content;
-  animation: marquee 20s linear infinite;
+  animation: marquee var(--marquee-duration) linear infinite;
 }
 
 .marquee__group {
   display: flex;
-  height: 170px;
+  height: var(--marquee-height);
   width: auto;
   border-radius: 12px;
   object-fit: contain;
@@ -46,6 +56,14 @@
   padding: 4px 16px 4px 12px;
   border-radius: 6px;
   font-size: 1.2rem;
+}
+
+/* Mobile : taille d'origine, sinon un seul logo tient à l'écran */
+@media (--mobile) {
+  .marquee {
+    --marquee-height: 170px;
+    --marquee-duration: 20s;
+  }
 }
 
 @keyframes marquee {

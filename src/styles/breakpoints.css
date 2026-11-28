@@ -18,3 +18,4 @@
 /* Seuils de mise en page propres à certaines sections */
 @custom-media --below-640 (max-width: 640px); /* footer empilé */
 @custom-media --below-860 (max-width: 860px); /* grille About sur 1 colonne */
+@custom-media --below-1024 (max-width: 1024px); /* offres sur 2 colonnes */

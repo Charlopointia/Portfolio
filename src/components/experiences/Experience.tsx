@@ -1,24 +1,23 @@
 import "./style/Experience.css";
-import Carousel from "./Carousel";
 import Experiencescard from "./Experiencescard";
+import TrainingCard from "./TrainingCard";
 
 export default function Experience() {
   return (
     <div className="experience">
       <h2 className="experience-title">
-        Une expérience bâtie au cours de nombreux projets
+        Une expérience bâtie au cours de nombreux projets :
       </h2>
-      <p className="experience-text">
-        Du site vitrine à l'audit de sécurité, un seul mot d'ordre : la rigueur.
-      </p>
-      <div className="experience-project-card-wrapper">
-        <Experiencescard />
-      </div>
-      <h2 className="social-validation-title">
-        Ensemble, nous sommes déjà allés au bout de leurs ambitions :
-      </h2>
-      <div className="experience-carousel">
-        <Carousel />
+      {/* Deux cards de même taille : formation à gauche, projets à droite */}
+      <div className="experience-project-card-wrapper experience-columns">
+        <div className="experience-column">
+          <h3 className="experience-column__title">CTF et formation multi-plateforme</h3>
+          <TrainingCard />
+        </div>
+        <div className="experience-column">
+          <h3 className="experience-column__title">Projet d'apprentissage</h3>
+          <Experiencescard />
+        </div>
       </div>
     </div>
   );

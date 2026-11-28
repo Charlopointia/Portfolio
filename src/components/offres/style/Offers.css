@@ -1,0 +1,420 @@
+/* --- Section « Mes offres » ---------------------------------------------- */
+
+.offers {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/*
+ * Titre + phrase d'intro, centrés ensemble entre les cards About et les cards des offres :
+ *   au-dessus = bas de la section About (120px + padding de section)
+ *   en dessous = la même valeur moins 60px (cards rapprochées de la phrase),
+ *   padding-top de #offres à 0, voir index.css.
+ */
+.offers-title-area {
+  margin-bottom: calc(120px + var(--section-pad-top) - 60px);
+}
+
+/*
+ * Même style que les titres About et logos : 3rem au maximum, une seule ligne,
+ * taille réduite avec l'écran (28 caractères × 0.6em de chasse ≈ 16.8em de large).
+ */
+.offers-title {
+  margin: 0;
+  text-align: center;
+  font-size: min(3rem, calc((100vw - 48px) / 16.8));
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+/*
+ * 3 colonnes sur ordinateur. Les cards d'une même ligne ont la même hauteur
+ * (stretch par défaut de la grille).
+ */
+.offers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Phrase sous le titre (même style que le sous-titre de la section Expérience) */
+.offers-intro {
+  /* Large : 2 lignes sur ordinateur, comme les autres sous-titres du site */
+  max-width: 90ch;
+  margin: 18px auto 0;
+  color: rgba(226, 236, 255, 0.84);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* --- Card ----------------------------------------------------------------- */
+
+/*
+ * Couleur par offre, la même que les toggles About :
+ * pentest → rouge, SOC → bleu, OSINT → violet.
+ * Appliquée à la card, à son bouton « Demander un devis » et à sa pop-up
+ * (classe .offer-theme--<id> sur chacun).
+ *   --offer-from / --offer-to : les deux teintes du dégradé (canaux R, G, B)
+ *   --offer-accent : texte coloré (accroche, puces, icône)
+ */
+.offer-theme--pentest {
+  --offer-from: 255, 80, 80;
+  --offer-to: 200, 40, 50;
+  --offer-accent: rgb(255, 110, 110);
+}
+
+.offer-theme--soc {
+  --offer-from: 80, 120, 255;
+  --offer-to: 60, 90, 200;
+  --offer-accent: rgb(120, 155, 255);
+}
+
+.offer-theme--osint {
+  --offer-from: 140, 90, 255;
+  --offer-to: 100, 60, 200;
+  --offer-accent: rgb(170, 135, 255);
+}
+
+/* Fond, bordure, coins et soulèvement au survol : composant Card (hoverable) */
+.offer-card {
+  --offer-tint: rgba(var(--offer-from), 0.14);
+  display: flex;
+  flex-direction: column;
+  padding: 32px 28px 28px;
+}
+
+/* Survol : dégradé à la couleur de l'offre (au lieu du vert par défaut des cards) */
+.offer-card:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(var(--offer-from), 0.3),
+    rgba(var(--offer-to), 0.18)
+  );
+}
+
+.offer-card__icon-wrap {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 22px;
+  border-radius: var(--card-radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--offer-tint);
+  color: var(--offer-accent);
+}
+
+.offer-card__icon {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.offer-card__title {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.offer-card__tagline {
+  margin: 10px 0 0;
+  color: var(--offer-accent);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.offer-card__points {
+  display: grid;
+  gap: 12px;
+  margin: 22px 0 0;
+  padding-left: 20px;
+  color: rgba(226, 236, 255, 0.84);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.offer-card__points li::marker {
+  color: var(--offer-accent);
+}
+
+/* --- Boutons (même forme que ceux de la section Contact) ------------------ */
+
+.offer-card__actions {
+  display: grid;
+  gap: 10px;
+  /* Pousse les boutons en bas de la card */
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.offer-btn {
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 11px 18px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.offer-btn:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Bouton principal : dégradé à la couleur de l'offre */
+.offer-btn--primary {
+  border-color: rgba(var(--offer-from), 0.55);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--offer-from), 0.42),
+    rgba(var(--offer-to), 0.26)
+  );
+  font-weight: 600;
+}
+
+.offer-btn--primary:hover {
+  border-color: rgba(var(--offer-from), 0.8);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--offer-from), 0.56),
+    rgba(var(--offer-to), 0.36)
+  );
+}
+
+.offer-btn:focus-visible {
+  outline: 2px solid #68f3b8;
+  outline-offset: 3px;
+}
+
+/* Texte lu par les lecteurs d'écran uniquement */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Pop-up « Demander un devis » ---------------------------------------- */
+
+.quote-dialog {
+  width: min(440px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  overflow: visible;
+}
+
+.quote-dialog::backdrop {
+  background: rgba(5, 11, 20, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/*
+ * Même aspect que les cards du site, teinté à la couleur de l'offre
+ * (opaque pour rester lisible sur le fond).
+ */
+.quote-dialog__box {
+  position: relative;
+  padding: 36px 32px 30px;
+  border-radius: var(--card-radius);
+  border: 1px solid rgba(var(--offer-from), 0.45);
+  background:
+    linear-gradient(135deg, rgba(var(--offer-from), 0.16), rgba(var(--offer-to), 0.06)),
+    var(--bg);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  text-align: center;
+}
+
+.quote-dialog[open] .quote-dialog__box {
+  animation: quote-dialog-in 0.2s ease;
+}
+
+@keyframes quote-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Croix de fermeture */
+.quote-dialog__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.quote-dialog__close::before,
+.quote-dialog__close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.quote-dialog__close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.quote-dialog__close:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.quote-dialog__title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.quote-dialog__offer {
+  margin: 8px 0 0;
+  color: var(--offer-accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.quote-dialog__text {
+  margin: 18px 0 0;
+  color: rgba(226, 236, 255, 0.84);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Délai de réponse mis en avant */
+.quote-dialog__delay {
+  display: inline-block;
+  margin: 14px 0 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--offer-from), 0.5);
+  background: rgba(var(--offer-from), 0.14);
+  color: var(--offer-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.quote-dialog__contacts {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quote-dialog__contacts li {
+  display: grid;
+  gap: 6px;
+}
+
+.quote-dialog__label {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Liens en forme de bouton, à la couleur de l'offre (comme « Demander un devis ») */
+.quote-dialog__link {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--offer-from), 0.55);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--offer-from), 0.42),
+    rgba(var(--offer-to), 0.26)
+  );
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.quote-dialog__link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--offer-from), 0.8);
+}
+
+.quote-dialog__close:focus-visible,
+.quote-dialog__link:focus-visible {
+  outline: 2px solid #68f3b8;
+  outline-offset: 3px;
+}
+
+/* --- Responsive ----------------------------------------------------------- */
+
+/* Tablette : 2 colonnes, la 3e card centrée en dessous (même largeur) */
+@media (--below-1024) {
+  .offers-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .offer-card:last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - 24px) / 2);
+  }
+}
+
+/* Mobile : 1 colonne */
+@media (--below-640) {
+  .quote-dialog__box {
+    padding: 32px 20px 24px;
+  }
+
+  .offers-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .offer-card:last-child {
+    grid-column: auto;
+    width: auto;
+  }
+
+  .offer-card {
+    padding: 26px 20px 22px;
+  }
+}

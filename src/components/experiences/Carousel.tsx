@@ -3,7 +3,7 @@ import "./style/Carousel.css";
 import img1 from "../../assets/Experience/Asset1.webp";
 import img2 from "../../assets/Experience/Asset2.webp";
 import img3 from "../../assets/Experience/Asset3.webp";
-import img4 from "../../assets/Experience/Asset4.webp";
+import img4 from "../../assets/Experience/priority1.webp";
 import img5 from "../../assets/Experience/Asset5.webp";
 
 export default function Carousel() {
@@ -11,7 +11,7 @@ export default function Carousel() {
     { src: img1, alt: "Logo Royal Savoy Hotel & Spa Lausanne" },
     { src: img2, alt: "Logo KBM Recycling" },
     { src: img3, alt: "Logo Gîtes de France" },
-    { src: img4, alt: "Logo Epitech" },
+    { src: img4, alt: "Logo Priority 1 Air Rescue" },
     { src: img5, alt: "Logo IONIS Education Group" },
   ];
 

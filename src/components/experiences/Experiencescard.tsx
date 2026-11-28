@@ -7,7 +7,6 @@ import ctfImage from "../../assets/projet/asset1.webp";
 import riddingImage from "../../assets/projet/asset4.webp";
 import auditImage from "../../assets/projet/DemoHacky.gif";
 import aliceImage from "../../assets/projet/CLI.gif";
-import ctf2Image from "../../assets/projet/HTB.webp";
 
 const projects = [
   {
@@ -45,13 +44,6 @@ const projects = [
     image: apiImage,
     tools: ["React", "API REST", "SQL", "Authentification"],
   },
-  {
-    title: "Entrainement CTF sur Hack The Box",
-    category: "Cybersécurité",
-    description: "Entrainement sur la plateforme Hack The Box, avec des défis de pentesting, d'exploitation de vulnérabilités et de reverse engineering.",
-    image: ctf2Image,
-    tools: ["Exegol", "Nmap", "Burp Suite", "Linux"],
-  }
 ];
 
 export default function Experiencescard() {

@@ -1,0 +1,106 @@
+/*
+ * Card « CTF et formation multi-plateforme » : deux captures empilées.
+ * min-height = celle de la card des projets (560px + 2px de bordure),
+ * utile quand elles sont empilées.
+ */
+.training-card {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  min-height: 562px;
+  padding: 28px;
+}
+
+.training-card:hover {
+  transform: translateY(var(--card-lift));
+}
+
+.training-card__shot {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 10px;
+  min-height: 0;
+  margin: 0;
+}
+
+.training-card__frame {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--card-radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  /* Fond visible tant que la capture n'est pas ajoutée */
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/*
+ * Capture affichée en entier (contain) : le fond du cadre reprend
+ * la couleur de fond de la capture pour qu'elle s'y fonde.
+ */
+.training-card__image {
+  /* En absolu : l'image s'adapte au cadre sans l'agrandir */
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.training-card__frame--htb {
+  background: rgb(18, 25, 38);
+}
+
+/* PortSwigger : capture large, proche du format du cadre → elle le remplit */
+.training-card__frame--portswigger .training-card__image {
+  object-fit: cover;
+  /* Rogne par le bas : le logo PortSwigger en haut reste entier */
+  object-position: center top;
+}
+
+/* Capture cliquable : lien vers le profil */
+.training-card__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.training-card__link:focus-visible {
+  outline: 2px solid #68f3b8;
+  outline-offset: 3px;
+}
+
+/* Message au survol : même police que le reste du site (hérite du body) */
+.training-card__hint {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  background: rgba(5, 11, 20, 0.72);
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.training-card__link:hover .training-card__hint,
+.training-card__link:focus-visible .training-card__hint {
+  opacity: 1;
+}
+
+.training-card__shot figcaption {
+  color: rgba(226, 236, 255, 0.78);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+@media (--mobile) {
+  .training-card {
+    min-height: 420px;
+    padding: 20px;
+    border-radius: 20px;
+  }
+}

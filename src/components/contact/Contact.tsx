@@ -1,18 +1,11 @@
-
 import { useEffect, useRef, useState } from "react";
 import Card from "../ui/Card";
+import { email, socialLinks } from "./contactInfo";
 import "./style/Contact.css";
-
-const socialLinks = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/charly-brachet-810683293/" },
-  { label: "GitHub", href: "https://github.com/Charlopointia" },
-  { label: "Instagram", href: "https://www.instagram.com/charly_brct/" },
-];
 
 export default function Contact() {
   const [isEmailCopied, setIsEmailCopied] = useState(false);
   const copiedTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const email = "charly.brachet@epitech.com";
 
   const copyEmail = async () => {
     try {

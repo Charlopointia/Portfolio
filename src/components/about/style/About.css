@@ -1,24 +1,44 @@
+/*
+ * Mise en page verticale, de haut en bas :
+ *   [zone du titre]  au moins --about-space-top, extensible
+ *   [cards]
+ *   [espace du bas]  au moins --about-space-bottom, extensible
+ * Les deux espaces se partagent la hauteur libre : les cards restent
+ * centrées comme avant, et le titre est centré dans la zone du haut.
+ */
 .about.about--centered {
+  --about-space-top: 200px;
+  --about-space-bottom: 120px;
   position: relative;
   width: min(1400px, 100%);
   min-height: calc(100vh - 128px);
   margin: 0 auto;
-  display: grid;
-  place-items: center;
-  padding-top: 200px;
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
-  padding-bottom: 120px;
+}
+
+/* Remonte jusqu'au début de la section (= fin de l'accueil) */
+.about.about--centered .about-title-area {
+  flex: 1 0 calc(var(--about-space-top) + var(--section-pad-top));
+  margin-top: calc(-1 * var(--section-pad-top));
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centré même si le titre est plus large que la zone */
+}
+
+.about.about--centered::after {
+  content: "";
+  flex: 1 0 var(--about-space-bottom);
 }
 
 .about.about--centered .aboutTitle {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
   margin: 0;
   text-align: center;
-  font-size: 3rem;
-  width: min(1100px, 100vw);
+  /* Une seule ligne : la taille diminue avec l'écran pour que le titre tienne
+     (41 caractères × 0.6em de chasse ≈ 24.6em de large) */
+  font-size: min(3rem, calc((100vw - 48px) / 24.6));
+  white-space: nowrap;
 }
 
 .about.about--centered .about-grid {
@@ -72,12 +92,17 @@
   text-align: center;
 }
 
+/*
+ * Card photo : une seule photo, centrée.
+ * min-height = hauteur qu'avait la card avec la légende (photo + légende) :
+ * la card garde sa taille, symétrique avec les autres.
+ */
 .about.about--centered .about-card--profile {
   display: grid;
   align-content: center;
   align-self: start;
   justify-items: center;
-  gap: 10px;
+  min-height: 259px;
   padding: 12px;
 }
 
@@ -87,25 +112,9 @@
   overflow: hidden;
   border-radius: 28px;
   border: 1px solid rgba(255, 255, 255, 0.12);
+  /* Fond visible tant que la photo n'est pas ajoutée */
+  background: rgba(255, 255, 255, 0.03);
   box-shadow: 0 16px 42px rgba(7, 16, 34, 0.22);
-}
-
-.about.about--centered .about-slide-track {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.38s ease;
-}
-
-.about.about--centered .about-profile-slide {
-  flex: 0 0 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  color: rgba(255, 255, 255, 0.92);
-  font-size: clamp(2.5rem, 5vw, 4.25rem);
-  font-weight: 700;
-  letter-spacing: 0.08em;
 }
 
 .about.about--centered .about-profile-image {
@@ -115,28 +124,12 @@
   object-fit: cover;
 }
 
-.about.about--centered .about-profile-slide--cyber {
-  background:
-    radial-gradient(circle at 30% 30%, rgba(147, 196, 255, 0.35), transparent 28%),
-    linear-gradient(160deg, rgba(18, 33, 63, 0.95), rgba(42, 73, 126, 0.88));
-}
-
-.about.about--centered .about-profile-slide--fullstack {
-  background:
-    radial-gradient(circle at 28% 32%, rgba(104, 243, 184, 0.36), transparent 30%),
-    linear-gradient(160deg, rgba(17, 67, 57, 0.96), rgba(37, 108, 79, 0.88));
-}
-
-.about.about--centered .about-profile-slide--dataia {
-  background:
-    radial-gradient(circle at 30% 30%, rgba(164, 139, 255, 0.38), transparent 30%),
-    linear-gradient(160deg, rgba(42, 30, 76, 0.96), rgba(79, 70, 145, 0.88));
-}
-
-.about.about--centered .about-profile-caption {
-  margin: 0;
-  text-align: center;
-  color: rgba(226, 236, 255, 0.78);
+/* Piste des slides de la card compétences */
+.about.about--centered .about-slide-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.38s ease;
 }
 
 .about.about--centered .about-card--toggle {
@@ -145,19 +138,36 @@
 }
 
 
+/* Sans ça, la card additionne la largeur de toutes ses slides et déborde sur mobile */
+.about.about--centered .about-card--skills {
+  min-width: 0;
+}
+
+/*
+ * Hauteur minimale = celle de l'ancienne liste « Dev » (h3 + 4 puces), qui fixait
+ * la hauteur de la card (256px) : la card garde sa taille, symétrique avec les autres.
+ * En grid, la piste des slides s'étire sur toute cette hauteur.
+ */
 .about.about--centered .about-skills-viewport {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   width: 100%;
+  min-height: 158px;
   overflow: hidden;
 }
 
+/* Toutes les slides ont la hauteur de la plus haute : le contenu est centré verticalement */
 .about.about--centered .about-skills-slide {
   flex: 0 0 100%;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .about.about--centered .about-skills-slide h3 {
   margin: 0 0 18px;
-  color: rgba(255, 255, 255, 0.94);
+  color: var(--accent, rgba(255, 255, 255, 0.94));
   font-size: 1.25rem;
 }
 
@@ -170,7 +180,116 @@
 }
 
 .about.about--centered .about-skills-slide li::marker {
-  color: #68f3b8;
+  color: var(--accent, #68f3b8);
+}
+
+/* --- Slide en 2 parties : outils | certifications ------------------------ */
+
+/*
+ * Outils | barre | certifications : même espace de chaque côté de la barre,
+ * l'ensemble est centré dans la card.
+ * La grille occupe toute la hauteur de la slide, sur 3 lignes (1fr auto 1fr) :
+ *   - le contenu est dans la ligne du milieu → centré verticalement, titres alignés ;
+ *   - la barre traverse les 3 lignes → même hauteur sur toutes les slides.
+ */
+.about.about--centered .about-skills-split {
+  flex: 1;
+  display: grid;
+  grid-template-columns: max-content 1px max-content;
+  grid-template-rows: 1fr auto 1fr;
+  justify-content: center;
+  column-gap: 56px;
+}
+
+.about.about--centered .about-skills-part:first-child {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.about.about--centered .about-skills-part:last-child {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.about.about--centered .about-skills-split > .about-skills-divider {
+  grid-column: 2;
+  grid-row: 1 / 4;
+}
+
+/* Fine barre de séparation */
+.about.about--centered .about-skills-divider {
+  align-self: stretch;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.16) 15%,
+    rgba(255, 255, 255, 0.16) 85%,
+    transparent
+  );
+}
+
+.about.about--centered .about-skills-subtitle {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Outils sur 2 colonnes */
+.about.about--centered .about-skills-slide .about-skills-tools {
+  grid-template-columns: repeat(2, max-content);
+  column-gap: 44px;
+  row-gap: 8px;
+}
+
+/*
+ * OSINT et Dev : textes plus longs (Wayback Machine, Gestion des bases de données…)
+ * → espacements resserrés pour tenir dans la card.
+ */
+.about.about--centered .about-theme--osint .about-skills-split,
+.about.about--centered .about-theme--dev .about-skills-split {
+  column-gap: 36px;
+}
+
+.about.about--centered .about-theme--osint .about-skills-tools,
+.about.about--centered .about-theme--dev .about-skills-tools {
+  column-gap: 28px;
+}
+
+.about.about--centered .about-cert-status {
+  margin: 0 0 6px;
+  color: var(--accent, #68f3b8);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.about.about--centered .about-skills-slide .about-cert-list {
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.about.about--centered .about-skills-slide .about-cert-list:last-child {
+  margin-bottom: 0;
+}
+
+.about.about--centered .about-cert-code {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.94);
+  text-decoration: none;
+  cursor: help;
+}
+
+/* Points « en cours » : le point affiché est choisi par LoadingDots (About_card.tsx) */
+.loading-dots span {
+  opacity: 0;
+}
+
+.loading-dots span.is-visible {
+  opacity: 1;
 }
 
 .about.about--centered .about-card--skills:hover {
@@ -200,9 +319,14 @@
   border-color: rgba(255, 255, 255, 0.35);
 }
 
+/*
+ * Toggles. 4 toggles tiennent dans la hauteur qu'occupaient les 3 anciens
+ * (la card garde sa taille) : 4 × 65px + 3 × 10px = 290px.
+ * 65px = rail de 48px + 2 × 7.5px de marge intérieure + 2px de bordure.
+ */
 .about.about--centered .about-toggle-list {
   display: grid;
-  gap: 16px;
+  gap: 10px;
 }
 
 .about.about--centered .about-toggle-switch {
@@ -211,12 +335,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 10px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(8, 17, 32, 0.28);
   color: rgba(236, 242, 255, 0.86);
   border-radius: 28px;
-  padding: 14px 16px;
+  padding: 7.5px 14px;
   font: inherit;
   cursor: pointer;
   transition:
@@ -234,15 +358,19 @@
 }
 
 .about.about--centered .about-toggle-label {
+  /* La card prend la largeur de son mot le plus long : on la fixe
+     pour qu'elle garde exactement sa largeur d'origine (280px) */
+  min-width: 98.3px;
   font-weight: 600;
   letter-spacing: 0.01em;
+  text-align: left;
 }
 
 .about.about--centered .about-toggle-track {
   position: relative;
   flex: 0 0 auto;
-  width: 96px;
-  height: 56px;
+  width: 76px;
+  height: 48px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.09);
   box-shadow:
@@ -255,29 +383,104 @@
   position: absolute;
   top: 6px;
   left: 6px;
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #ffffff;
   box-shadow: 0 14px 28px rgba(14, 29, 58, 0.22);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/*
+ * Thème de couleur de chaque domaine, appliqué au toggle ET à sa liste :
+ *   --toggle-from / --toggle-to : dégradé du toggle sélectionné
+ *   --toggle-glow               : lueur et bordure du toggle sélectionné
+ *   --accent                    : puces et titres de la liste (version claire, lisible)
+ * Les teintes reprennent le survol des cards, sauf Pentesting en rouge
+ * (red team / blue team avec l'Analyse SOC).
+ */
+.about.about--centered .about-theme--pentesting {
+  /* rouge */
+  --toggle-from: rgb(255, 80, 80);
+  --toggle-to: rgb(200, 40, 50);
+  --toggle-glow: rgba(255, 80, 80, 0.3);
+  --accent: rgb(255, 110, 110);
+}
+
+.about.about--centered .about-theme--soc {
+  /* bleu : survol de la card profil */
+  --toggle-from: rgb(80, 120, 255);
+  --toggle-to: rgb(60, 90, 200);
+  --toggle-glow: rgba(80, 120, 255, 0.3);
+  --accent: rgb(120, 155, 255);
+}
+
+.about.about--centered .about-theme--osint {
+  /* violet : survol de la card des toggles */
+  --toggle-from: rgb(140, 90, 255);
+  --toggle-to: rgb(100, 60, 200);
+  --toggle-glow: rgba(140, 90, 255, 0.3);
+  --accent: rgb(170, 135, 255);
+}
+
+.about.about--centered .about-theme--dev {
+  /* vert : survol de la card description */
+  --toggle-from: rgb(60, 200, 140);
+  --toggle-to: rgb(40, 160, 110);
+  --toggle-glow: rgba(60, 200, 140, 0.3);
+  --accent: rgb(104, 243, 184);
+}
+
 .about.about--centered .about-toggle-switch.is-active {
-  border-color: rgba(131, 214, 233, 0.24);
+  border-color: var(--toggle-glow);
   color: rgba(255, 255, 255, 0.98);
 }
 
 .about.about--centered .about-toggle-switch.is-active .about-toggle-track {
-  background: linear-gradient(135deg, #68f3b8 0%, #5ca9f3 100%);
+  background: linear-gradient(135deg, var(--toggle-from) 0%, var(--toggle-to) 100%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 18px 36px rgba(57, 150, 224, 0.22);
+    0 18px 36px var(--toggle-glow);
 }
 
 .about.about--centered .about-toggle-switch.is-active .about-toggle-thumb {
-  transform: translateX(40px);
-  box-shadow: 0 18px 34px rgba(32, 129, 186, 0.28);
+  transform: translateX(28px);
+  box-shadow: 0 18px 34px rgba(14, 29, 58, 0.28);
+}
+
+/* Écran étroit : outils puis certifications, l'un sous l'autre */
+@media (--below-640) {
+  .about.about--centered .about-skills-split {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    align-content: center;
+    justify-content: stretch;
+    gap: 20px;
+  }
+
+  .about.about--centered .about-skills-part:first-child,
+  .about.about--centered .about-skills-part:last-child,
+  .about.about--centered .about-skills-split > .about-skills-divider {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  /* Empilé : la barre devient horizontale */
+  .about.about--centered .about-skills-divider {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.16) 15%,
+      rgba(255, 255, 255, 0.16) 85%,
+      transparent
+    );
+  }
+
+  .about.about--centered .about-skills-slide .about-skills-tools {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+  }
 }
 
 @media (--below-860) {
@@ -298,12 +501,8 @@
 
 @media (--mobile) {
   .about.about--centered {
+    --about-space-top: 72px;
     min-height: auto;
-    padding-top: 72px;
-  }
-
-  .about.about--centered .aboutTitle {
-    top: 16px;
   }
 
   .about.about--centered .about-card {
@@ -312,24 +511,28 @@
   }
 
   .about.about--centered .about-card--profile {
+    min-height: 275px;
     padding: 20px 18px;
   }
 
+  /* 4 × 56px + 3 × 10px = 254px : même hauteur de card qu'avec 3 toggles */
   .about.about--centered .about-toggle-switch {
-    padding: 12px 14px;
+    padding: 7px 14px;
   }
 
   .about.about--centered .about-toggle-track {
-    width: 82px;
-    height: 48px;
+    width: 68px;
+    height: 40px;
   }
 
   .about.about--centered .about-toggle-thumb {
-    width: 36px;
-    height: 36px;
+    top: 4px;
+    left: 4px;
+    width: 32px;
+    height: 32px;
   }
 
   .about.about--centered .about-toggle-switch.is-active .about-toggle-thumb {
-    transform: translateX(34px);
+    transform: translateX(28px);
   }
 }

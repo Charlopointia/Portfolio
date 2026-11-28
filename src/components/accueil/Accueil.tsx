@@ -13,11 +13,13 @@ export default function Accueil() {
         <div className="heroCard" ref={cardRef}>
           <h1 className="title">Charly Brachet</h1>
           <p className="heroSubtitle">
-            Développeur fullstack orienté cybersécurité, data et IA, basé à Bordeaux.
+            Étudiant en cybersécurité, pentesteur et analyste SOC freelance.
           </p>
 
           <div className="heroControls" aria-label="Actions principales">
             <a href="#about" className="menuCard about">À propos</a>
+
+            <a href="#offres" className="menuCard offres">Prestations</a>
 
             <a href="#experience" className="menuCard experience">Expérience</a>
 
@@ -28,7 +30,7 @@ export default function Accueil() {
               download
               className="menuCard menuCard--secondary"
             >
-              Télécharger mon CV
+              Mon CV
             </a>
             
           </div>
